@@ -1,7 +1,7 @@
-project_id                = "panw-gcp-team-testing"
-prefix                    = "panw"
-public_key_path           = "~/.ssh/gcp-demo.pub"
-fw_image_name             = "vmseries-flex-bundle1-1010"
+#project_id                = ""
+#prefix                    = "panw"
+#public_key_path           = "~/.ssh/gcp-demo.pub"
+#fw_image_name             = "vmseries-flex-bundle1-1010"
 
 mgmt_sources              = ["0.0.0.0/0"]
 regions                   = ["us-east4", "us-west2"]
@@ -16,5 +16,3 @@ fw_region1_bootstrap_path = "bootstrap_files/vmseries_region1/"
 vm_image                  = "ubuntu-os-cloud/ubuntu-1604-lts"
 vm_type                   = "f1-micro"
 vm_user                   = "demouser"
-
-auth_file                 = "../../../gcp/auth/account_host.json"
