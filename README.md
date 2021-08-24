@@ -30,7 +30,7 @@ In your project, open GCP Cloud Terminal and run the following.
 ```
 $ gcloud services enable compute.googleapis.com
 $ ssh-keygen -f ~/.ssh/gcp-demo -t rsa -C gcp-demo
-$ git clone https://github.com/wwce/gcp-vmseries-tf-ilbnh-tags
+$ git clone https://github.com/wwce/gcp-vmseries-tf-ilbnh-tags; cd gcp-vmseries-tf-ilbnh-tags
 ```
 
 #### 2. Edit terraform.tfvars
