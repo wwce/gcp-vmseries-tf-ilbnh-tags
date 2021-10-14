@@ -101,7 +101,3 @@ resource "google_compute_route" "region1" {
 output "FW_ACCESS_REGION1" {
   value = { for k, v in module.vmseries_region1.nic1_ips : k => "https://${v}" }
 }
-
-output "JUMP_BOX_REGION1" {
-  value = { for k, v in module.vmseries_region1.nic0_ips : k => "ssh paloalto@${v}" }
-}
