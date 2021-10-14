@@ -110,11 +110,14 @@ resource "google_compute_route" "region0" {
   tags         = ["${var.regions[0]}-fw"]
 }
 
+output "CREDENTIALS" {
+  value = "paloalto/Pal0Alt0@123"
+}
 
-output "FW_MGMT_ACCESS_REGION0" {
+output "FW_ACCESS_REGION0" {
   value = { for k, v in module.vmseries_region0.nic1_ips : k => "https://${v}" }
 }
 
 output "JUMP_BOX_REGION0" {
-  value = { for k, v in module.vmseries_region0.nic0_ips : k => "ssh ${var.vm_user}@${v} -i ~/.ssh/gcp-demo -p 220" }
+  value = { for k, v in module.vmseries_region0.nic0_ips : k => "ssh paloalto@${v}" }
 }
