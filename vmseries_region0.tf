@@ -119,5 +119,9 @@ output "FW_ACCESS_REGION0" {
 }
 
 output "JUMP_BOX_REGION0" {
-  value = { for k, v in module.vmseries_region0.nic0_ips : k => "ssh paloalto@${v}" }
+  value = "ssh paloalto@${module.vmseries_region0.nic0_ips["vmseries01"]} -p 220"
+}
+
+output "JUMP_BOX_REGION1" {
+  value = "ssh paloalto@${module.vmseries_region0.nic0_ips["vmseries01"]} -p 221"
 }
