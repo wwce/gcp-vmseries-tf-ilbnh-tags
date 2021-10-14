@@ -2,7 +2,7 @@
 #prefix                    = "panw"
 #public_key_path           = "~/.ssh/gcp-demo.pub"
 #fw_image_name             = "vmseries-flex-bundle1-1010"
-
+authcodes                 = ""
 mgmt_sources              = ["0.0.0.0/0"]
 regions                   = ["us-east4", "us-west2"]
 cidrs_mgmt                = ["10.0.0.0/28", "10.0.0.16/28"]
