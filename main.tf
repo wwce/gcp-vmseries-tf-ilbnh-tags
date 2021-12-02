@@ -5,7 +5,7 @@ terraform {}
 
 provider "google" {
   #credentials = var.auth_file
-  project     = var.project_id
+  #project     = var.project_id
   region      = var.regions[0]
 }
 
