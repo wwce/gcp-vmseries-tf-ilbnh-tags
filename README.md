@@ -28,16 +28,16 @@ The build creates two sets of VM-Series firewalls (2 firewalls in each set) that
 #### 1. Setup & Download Build
 In your project, open GCP Cloud Terminal and run the following.
 ```
-$ gcloud services enable compute.googleapis.com
-$ ssh-keygen -f ~/.ssh/gcp-demo -t rsa -C gcp-demo
-$ git clone https://github.com/wwce/gcp-vmseries-tf-ilbnh-tags; cd gcp-vmseries-tf-ilbnh-tags
+gcloud services enable compute.googleapis.com
+ssh-keygen -f ~/.ssh/gcp-demo -t rsa -C gcp-demo
+git clone https://github.com/wwce/gcp-vmseries-tf-ilbnh-tags; cd gcp-vmseries-tf-ilbnh-tags
 ```
 
 #### 2. Edit terraform.tfvars
 Open terraform.tfvars and edit variables (lines 1-4) to match your Project ID, deployment prefix, SSH Key (from step 1), and VM-Series type.
 
 ```
-$ vi terraform.tfvars
+vi terraform.tfvars
 ```
 
 <p align="center">
@@ -47,8 +47,8 @@ $ vi terraform.tfvars
 
 #### 3. Deploy Build
 ```
-$ terraform init
-$ terraform apply
+terraform init
+terraform apply
 ```
 
 </br>
@@ -56,8 +56,8 @@ $ terraform apply
 ### How to Destroy
 Run the following to destroy the build and remove the SSH key created in step 1.
 ```
-$ terraform destroy
-$ rm ~/.ssh/gcp-demo*
+terraform destroy
+rm ~/.ssh/gcp-demo*
 ```
 
 </br>
