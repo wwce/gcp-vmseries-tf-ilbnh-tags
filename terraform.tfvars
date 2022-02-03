@@ -13,6 +13,6 @@ fw_machine_type           = "n1-standard-4"
 fw_region0_bootstrap_path = "bootstrap_files/vmseries_region0/"
 fw_region1_bootstrap_path = "bootstrap_files/vmseries_region1/"
 
-vm_image                  = "ubuntu-os-cloud/ubuntu-1604-lts"
+vm_image                  = "https://www.googleapis.com/compute/v1/projects/panw-gcp-team-testing/global/images/ubuntu-2004-lts-apache"
 vm_type                   = "f1-micro"
 vm_user                   = "demouser"
