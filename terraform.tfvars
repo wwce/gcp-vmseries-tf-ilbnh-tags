@@ -4,7 +4,7 @@ fw_image_name             = "vmseries-flex-bundle1-1010"
 authcodes                 = ""
 
 mgmt_sources              = ["0.0.0.0/0"]
-regions                   = ["us-east4", "us-west2"]
+regions                   = ["us-east1", "us-west2"]
 cidrs_mgmt                = ["10.0.0.0/28", "10.0.0.16/28"]
 cidrs_untrust             = ["10.0.1.0/28", "10.0.1.16/28"]
 cidrs_trust               = ["10.0.2.0/28", "10.0.2.16/28"]

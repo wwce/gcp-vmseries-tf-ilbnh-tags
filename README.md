@@ -8,7 +8,7 @@ Palo Alto Networks VM-Series ML-NGFW is the industry-leading virtualized securit
 * Isolation of egress traffic between development and production environments.
 * Creation of “swimming-lanes” to distribute traffic to different sets of load balanced firewalls.
 
-This blueprint specifically focuses on leveraging network tags to isolate regional traffic flows for a global VPC network.
+This lab specifically focuses on leveraging network tags to isolate regional traffic flows for a global VPC network.
 
 
 
@@ -21,7 +21,7 @@ This blueprint specifically focuses on leveraging network tags to isolate region
 
 ## Topology
 
-The diagram below shows the topology of the blueprint.  Everything depicted in the diagram is built through Terraform, including the local configuration of the compute resources.   
+The diagram below shows the topology of the lab.  Everything depicted in the diagram is built through Terraform, including the local configuration of the compute resources.   
 
 <p align="center">
     <img src="images/image1.png" width="500">
@@ -63,7 +63,7 @@ In other words, outbound requests from <strong>US-EAST4-VM</strong> are routed t
 
 ## Build
 
-In this section, we will deploy the blueprint with Terraform. Please note, after the build completes, the virtual machines will take an additional 10 minutes to finish their boot-up process. 
+In this section, we will deploy the lab with Terraform. Please note, after the build completes, the virtual machines will take an additional 10 minutes to finish their boot-up process. 
 
 <span style="color:red">**Important!**</span> This build only creates 1 VM-Series firewall in each region.  We recommend using Panorama (which is not covered in this build) to centrally manage load balanced VM-Series firewalls.  If you would like to deploy additional firewalls to the load balancer's backend pool, uncomment lines `41-59` and `72-75` in the `vmseries_region0.tf` and `vmseries_region1.tf` files before proceeding.
 
@@ -85,8 +85,8 @@ ssh-keygen -f ~/.ssh/gcp-demo -t rsa -C gcp-demo
 3. Copy and paste the following to clone the repository and to apply the Terraform plan.
 
 ```
-git clone https://github.com/wwce/google-cloud-vmseries-builds
-cd google-cloud-vmseries-builds/blueprints/vmseries-global-vpc
+git clone https://github.com/wwce/gcp-vmseries-tf-ilbnh-tags
+cd gcp-vmseries-tf-ilbnh-tags
 terraform init
 terraform apply
 ```
@@ -365,11 +365,11 @@ ping 8.8.8.8
 If you would like to destroy the environment, enter the following in Google cloud shell.
 
 ```
-cd google-cloud-vmseries-builds/blueprints/vmseries-global-vpc
+cd gcp-vmseries-tf-ilbnh-tags
 terraform destroy -auto-approve
 rm ~/.ssh/gcp-demo
 ```
 
 ## Conclusion
 
-You have completed the blueprint guide.  You ahve learned how to leverage network tags to route traffic to specific internal TCP/UDP load balancers that frontend VM-Series firewalls. 
+You have completed the lab guide.  You ahve learned how to leverage network tags to route traffic to specific internal TCP/UDP load balancers that frontend VM-Series firewalls. 
