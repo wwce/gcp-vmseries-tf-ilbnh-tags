@@ -24,13 +24,12 @@ variable vm_scopes {
 
 
 resource "google_compute_instance" "region0" {
-  name                      = "${local.prefix_region0}-test-vm1"
+  name                      = "${local.prefix_region0}-vm"
   machine_type              = var.vm_type
   zone                      = data.google_compute_zones.region0.names[0]
   can_ip_forward            = false
   allow_stopping_for_update = true
-  metadata_startup_script   = file("${path.module}/bootstrap_files/ubuntu_credentials.sh")
-  
+
   metadata = {
     serial-port-enable = true
     ssh-keys           = fileexists(var.public_key_path) ? "${var.vm_user}:${file(var.public_key_path)}" : ""
@@ -56,12 +55,11 @@ resource "google_compute_instance" "region0" {
 
 
 resource "google_compute_instance" "region1" {
-  name                      = "${local.prefix_region1}-test-vm1"
+  name                      = "${local.prefix_region1}-vm"
   machine_type              = var.vm_type
   zone                      = data.google_compute_zones.region1.names[0]
   can_ip_forward            = false
   allow_stopping_for_update = true
-  metadata_startup_script   = file("${path.module}/bootstrap_files/ubuntu_credentials.sh")
 
   metadata = {
     serial-port-enable = true

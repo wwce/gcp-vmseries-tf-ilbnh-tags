@@ -2,7 +2,7 @@
 # Create bootstrap bucket for VM-Series, internal load balancer, and route to load balancer forwarding rule.
 
 module "bootstrap_region1" {
-  source        = "./modules/gcp_bootstrap/"
+  source        = "../../modules/google_bootstrap/"
   bucket_name   = "${local.prefix_region1}-bootstrap"
   file_location = var.fw_region1_bootstrap_path
   config        = ["init-cfg.txt", "bootstrap.xml"]
@@ -10,12 +10,18 @@ module "bootstrap_region1" {
 }
 
 module "vmseries_region1" {
-  source = "./modules/vmseries/"
-
-  ssh_key      = fileexists(var.public_key_path) ? "admin:${file(var.public_key_path)}" : ""
-  image_name   = var.fw_image_name
-  machine_type = var.fw_machine_type
+  source = "../../modules/vmseries_unmanaged_ig/"
+  image_name            = var.fw_image_name
+  machine_type          = var.fw_machine_type
   create_instance_group = true
+  project_id               = data.google_client_config.main.project
+
+  metadata = {
+    mgmt-interface-swap                  = "enable"
+    vmseries-bootstrap-gce-storagebucket = module.bootstrap_region1.bucket_name
+    serial-port-enable                   = true
+    ssh-keys                             = fileexists(var.public_key_path) ? "admin:${file(var.public_key_path)}" : ""
+  }
 
   instances = {
 
@@ -38,27 +44,25 @@ module "vmseries_region1" {
         }
       ]
     }
-
-    vmseries02 = {
-      name             = "${local.prefix_region1}-vmseries02"
-      zone             = data.google_compute_zones.region1.names[1]
-      bootstrap_bucket = module.bootstrap_region1.bucket_name
-      network_interfaces = [
-        {
-          subnetwork = module.vpc_untrust.subnet_self_link["untrust-${var.regions[1]}"]
-          public_nat = true
-        },
-        {
-          subnetwork = module.vpc_mgmt.subnet_self_link["mgmt-${var.regions[1]}"]
-          public_nat = true
-        },
-        {
-          subnetwork = module.vpc_trust.subnet_self_link["trust-${var.regions[1]}"]
-          public_nat = false
-        }
-      ]
-    }
-
+    # vmseries02 = {
+    #   name             = "${local.prefix_region1}-vmseries02"
+    #   zone             = data.google_compute_zones.region1.names[1]
+    #   bootstrap_bucket = module.bootstrap_region1.bucket_name
+    #   network_interfaces = [
+    #     {
+    #       subnetwork = module.vpc_untrust.subnet_self_link["untrust-${var.regions[1]}"]
+    #       public_nat = true
+    #     },
+    #     {
+    #       subnetwork = module.vpc_mgmt.subnet_self_link["mgmt-${var.regions[1]}"]
+    #       public_nat = true
+    #     },
+    #     {
+    #       subnetwork = module.vpc_trust.subnet_self_link["trust-${var.regions[1]}"]
+    #       public_nat = false
+    #     }
+    #   ]
+    # }
   }
 }
 
@@ -71,9 +75,9 @@ resource "google_compute_region_backend_service" "region1" {
   backend {
       group = module.vmseries_region1.instance_groups["vmseries01"]
   }
-  backend {
-      group = module.vmseries_region1.instance_groups["vmseries02"]
-  }
+  # backend {
+  #     group = module.vmseries_region1.instance_groups["vmseries02"]
+  # }
 }
 
 resource "google_compute_forwarding_rule" "region1" {
@@ -95,9 +99,4 @@ resource "google_compute_route" "region1" {
   next_hop_ilb = google_compute_forwarding_rule.region1.id
   priority     = 1000
   tags = ["${var.regions[1]}-fw"]
-}
-
-
-output "FW_ACCESS_REGION1" {
-  value = { for k, v in module.vmseries_region1.nic1_ips : k => "https://${v}" }
 }

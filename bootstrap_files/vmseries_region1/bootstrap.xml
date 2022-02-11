@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<config urldb="paloaltonetworks" version="10.1.0" detail-version="10.1.0">
+<config detail-version="10.1.0" urldb="paloaltonetworks" version="10.1.0">
   <mgt-config>
     <users>
       <entry name="admin">
@@ -9,7 +9,15 @@
             <superuser>yes</superuser>
           </role-based>
         </permissions>
-        <public-key>c3NoLXJzYSBBQUFBQjNOemFDMXljMkVBQUFBREFRQUJBQUFCQVFEcDh6TWtON0hVZitLVVp6VkdocXA1ZzRsWGRpZnZhaDR3VGFSeUhLOFV0blJUUWNEd2lBM1lDaWE5M25aRGxOaUZKd016Yi9JYjgzNG5LSVM2dTF6UCtqcmVySFBvQlZxOFNuUTMzODk4UTViRUtSaVZqaURtMnhlWjZqOE9RYW5wU20vZmZiN3YwbzQwK1dUMW82TW84b2hFU2lVa05Yc0RzaVRHUXZGdXkxYjRpNlMxZGRRVGR2WURWOU0wb1dxZjNuRUI0cVFUV1hEb0ErS0N4Y3lxSFIrc0tXTGZuWVlEZjNEUEtBWjlHalQ4SnJkN3FmTzdFSG9qeU5mOThTZ2x5cXFvYkxTOHljRWNsZTFOdVRVQnNxejFkMXFMOUhLVlpFbnFzcEtpaHJWYUNEcUVXNGh4bENHUWNlZmZVTEdmUUdLNjQ3RVhJb1orMmVsbFdDQWogdGVycmFmb3Jt</public-key>
+        <public-key>c3NoLXJzYSBBQUFBQjNOemFDMXljMkVBQUFBREFRQUJBQUFCQVFEZi8wMmxlaXMrU292LzhJajdRNEptakM1MG5tQXV2eTVndmY5d1VaZmlvcll3TmpYU2hCWkg4SG1JVmhqd0RjUDA3NzJ1QmVhMVR5VzN5UEFFajhjcEV6RWZkNVFJRTNXTDlySkYxNmlkZU1Sdk9WdEg2QS82WGcvSXRFZU80SEo3cEFRQmtoRFFKQ0dSam1HK1N4T00zUjJGSXQ3TzE3ZWwvRndZSFZVZEVuQWxZakdSb1o1VHhFZUVPUnh4UXYzalRWcmlQWlMxQzdJWjV5U0YyZG5MRksvSzV6eVkzeDFkYml4c3ZCTTNGTlFVYm12Y1ROOXFuN2UwZzY2REwrajdHOEozejN1UjlpUVByV3VpSm1SRTJqZDNKcWpnbExubnNXNzYvNVVobUtjNEdZU0RTdWtvREtnbHNaa1ZwS0dOUncweTNGWFFJMEQ0Y0FQdVRLYUogZ2NwLWRlbW8=</public-key>
+      </entry>
+      <entry name="paloalto">
+        <permissions>
+          <role-based>
+            <superuser>yes</superuser>
+          </role-based>
+        </permissions>
+        <phash>$5$tlrualtx$af49W3clSDetsXo1mHk/HSZLSM/05pStw6MjdyoJUT.</phash>
       </entry>
     </users>
     <password-complexity>
@@ -465,7 +473,7 @@
           <management>
             <hostname-type-in-syslog>FQDN</hostname-type-in-syslog>
             <initcfg>
-              <public-key>c3NoLXJzYSBBQUFBQjNOemFDMXljMkVBQUFBREFRQUJBQUFCQVFEcDh6TWtON0hVZitLVVp6VkdocXA1ZzRsWGRpZnZhaDR3VGFSeUhLOFV0blJUUWNEd2lBM1lDaWE5M25aRGxOaUZKd016Yi9JYjgzNG5LSVM2dTF6UCtqcmVySFBvQlZxOFNuUTMzODk4UTViRUtSaVZqaURtMnhlWjZqOE9RYW5wU20vZmZiN3YwbzQwK1dUMW82TW84b2hFU2lVa05Yc0RzaVRHUXZGdXkxYjRpNlMxZGRRVGR2WURWOU0wb1dxZjNuRUI0cVFUV1hEb0ErS0N4Y3lxSFIrc0tXTGZuWVlEZjNEUEtBWjlHalQ4SnJkN3FmTzdFSG9qeU5mOThTZ2x5cXFvYkxTOHljRWNsZTFOdVRVQnNxejFkMXFMOUhLVlpFbnFzcEtpaHJWYUNEcUVXNGh4bENHUWNlZmZVTEdmUUdLNjQ3RVhJb1orMmVsbFdDQWogdGVycmFmb3Jt</public-key>
+              <public-key>c3NoLXJzYSBBQUFBQjNOemFDMXljMkVBQUFBREFRQUJBQUFCQVFEZi8wMmxlaXMrU292LzhJajdRNEptakM1MG5tQXV2eTVndmY5d1VaZmlvcll3TmpYU2hCWkg4SG1JVmhqd0RjUDA3NzJ1QmVhMVR5VzN5UEFFajhjcEV6RWZkNVFJRTNXTDlySkYxNmlkZU1Sdk9WdEg2QS82WGcvSXRFZU80SEo3cEFRQmtoRFFKQ0dSam1HK1N4T00zUjJGSXQ3TzE3ZWwvRndZSFZVZEVuQWxZakdSb1o1VHhFZUVPUnh4UXYzalRWcmlQWlMxQzdJWjV5U0YyZG5MRksvSzV6eVkzeDFkYml4c3ZCTTNGTlFVYm12Y1ROOXFuN2UwZzY2REwrajdHOEozejN1UjlpUVByV3VpSm1SRTJqZDNKcWpnbExubnNXNzYvNVVobUtjNEdZU0RTdWtvREtnbHNaa1ZwS0dOUncweTNGWFFJMEQ0Y0FQdVRLYUogZ2NwLWRlbW8=</public-key>
               <type>
                 <dhcp-client>
                   <send-hostname>yes</send-hostname>

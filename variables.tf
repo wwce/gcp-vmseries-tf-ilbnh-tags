@@ -16,11 +16,6 @@ variable fw_image_name {
   type        = string
 }
 
-variable prefix {
-  description = "Name to prepend to resources created."
-  default = ""
-}
-
 variable fw_machine_type {
 }
 

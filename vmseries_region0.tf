@@ -2,7 +2,7 @@
 # Create bootstrap bucket for VM-Series, internal load balancer, and route to load balancer forwarding rule.
 
 module "bootstrap_region0" {
-  source        = "./modules/gcp_bootstrap/"
+  source        = "../../modules/google_bootstrap/"
   bucket_name   = "${local.prefix_region0}-bootstrap"
   file_location = var.fw_region0_bootstrap_path
   config        = ["init-cfg.txt", "bootstrap.xml"]
@@ -10,12 +10,18 @@ module "bootstrap_region0" {
 }
 
 module "vmseries_region0" {
-  source = "./modules/vmseries/"
-
-  ssh_key               = fileexists(var.public_key_path) ? "admin:${file(var.public_key_path)}" : ""
+  source = "../../modules/vmseries_unmanaged_ig/"
   image_name            = var.fw_image_name
   machine_type          = var.fw_machine_type
   create_instance_group = true
+  project_id               = data.google_client_config.main.project
+
+  metadata = {
+    mgmt-interface-swap                  = "enable"
+    vmseries-bootstrap-gce-storagebucket = module.bootstrap_region0.bucket_name
+    serial-port-enable                   = true
+    ssh-keys                             = fileexists(var.public_key_path) ? "admin:${file(var.public_key_path)}" : ""
+  }
 
   instances = {
 
@@ -37,55 +43,41 @@ module "vmseries_region0" {
           public_nat = false
         }
       ]
-    },
-    vmseries02 = {
-      name             = "${local.prefix_region0}-vmseries02"
-      zone             = data.google_compute_zones.region0.names[1]
-      bootstrap_bucket = module.bootstrap_region0.bucket_name
-      network_interfaces = [
-        {
-          subnetwork = module.vpc_untrust.subnet_self_link["untrust-${var.regions[0]}"]
-          public_nat = true
-        },
-        {
-          subnetwork = module.vpc_mgmt.subnet_self_link["mgmt-${var.regions[0]}"]
-          public_nat = true
-        },
-        {
-          subnetwork = module.vpc_trust.subnet_self_link["trust-${var.regions[0]}"]
-          public_nat = false
-        }
-      ]
     }
+    # vmseries02 = {
+    #   name             = "${local.prefix_region0}-vmseries02"
+    #   zone             = data.google_compute_zones.region0.names[1]
+    #   bootstrap_bucket = module.bootstrap_region0.bucket_name
+    #   network_interfaces = [
+    #     {
+    #       subnetwork = module.vpc_untrust.subnet_self_link["untrust-${var.regions[0]}"]
+    #       public_nat = true
+    #     },
+    #     {
+    #       subnetwork = module.vpc_mgmt.subnet_self_link["mgmt-${var.regions[0]}"]
+    #       public_nat = true
+    #     },
+    #     {
+    #       subnetwork = module.vpc_trust.subnet_self_link["trust-${var.regions[0]}"]
+    #       public_nat = false
+    #     }
+    #   ]
+    # }
   }
-
-  depends_on = [
-    module.bootstrap_region0
-  ]
-}
-
-
-resource "google_compute_health_check" "hc" {
-  name = "${local.prefix_region0}-hc"
-
-  tcp_health_check {
-    port = 80
-  }
-
 }
 
 resource "google_compute_region_backend_service" "region0" {
   name          = "${local.prefix_region0}-backend"
   region        = var.regions[0]
   health_checks = [google_compute_health_check.hc.id]
-  network = module.vpc_trust.vpc_id
-  
+  network       = module.vpc_trust.vpc_id
+
   backend {
     group = module.vmseries_region0.instance_groups["vmseries01"]
   }
-  backend {
-    group = module.vmseries_region0.instance_groups["vmseries02"]
-  }
+  # backend {
+  #   group = module.vmseries_region0.instance_groups["vmseries02"]
+  # }
 
 }
 
@@ -110,18 +102,10 @@ resource "google_compute_route" "region0" {
   tags         = ["${var.regions[0]}-fw"]
 }
 
-output "CREDENTIALS" {
-  value = "paloalto/Pal0Alt0@123"
-}
+resource "google_compute_health_check" "hc" {
+  name = "${local.prefix_region0}-hc"
 
-output "FW_ACCESS_REGION0" {
-  value = { for k, v in module.vmseries_region0.nic1_ips : k => "https://${v}" }
-}
-
-output "JUMP_BOX_REGION0" {
-  value = "ssh paloalto@${module.vmseries_region0.nic0_ips["vmseries01"]} -p 220"
-}
-
-output "JUMP_BOX_REGION1" {
-  value = "ssh paloalto@${module.vmseries_region0.nic0_ips["vmseries01"]} -p 221"
+  tcp_health_check {
+    port = 80
+  }
 }

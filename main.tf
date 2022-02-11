@@ -13,11 +13,21 @@ data "google_compute_zones" "region0" {
   region = var.regions[0]
 }
 
+data "google_client_config" "main" {
+}
+
 data "google_compute_zones" "region1" {
   region = var.regions[1]
 }
 
+resource "random_string" "main" {
+  length      = 4
+  min_lower   = 4
+  special     = false
+}
+
 locals {
-    prefix_region0 = "${var.prefix}-${var.regions[0]}"
-    prefix_region1 = "${var.prefix}-${var.regions[1]}"
+    prefix         = random_string.main.result
+    prefix_region0 = "${local.prefix}-${var.regions[0]}"
+    prefix_region1 = "${local.prefix}-${var.regions[1]}"
 }

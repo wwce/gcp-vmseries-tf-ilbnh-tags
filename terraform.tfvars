@@ -1,8 +1,8 @@
-#project_id                = ""
-#prefix                    = "panw"
-#public_key_path           = "~/.ssh/gcp-demo.pub"
-#fw_image_name             = "vmseries-flex-bundle1-1010"
+project_id                = null
+public_key_path           = "~/.ssh/gcp-demo.pub"
+fw_image_name             = "vmseries-flex-bundle1-1010"
 authcodes                 = ""
+
 mgmt_sources              = ["0.0.0.0/0"]
 regions                   = ["us-east4", "us-west2"]
 cidrs_mgmt                = ["10.0.0.0/28", "10.0.0.16/28"]
@@ -15,4 +15,4 @@ fw_region1_bootstrap_path = "bootstrap_files/vmseries_region1/"
 
 vm_image                  = "https://www.googleapis.com/compute/v1/projects/panw-gcp-team-testing/global/images/ubuntu-2004-lts-apache"
 vm_type                   = "f1-micro"
-vm_user                   = "demouser"
+vm_user                   = "paloalto"
