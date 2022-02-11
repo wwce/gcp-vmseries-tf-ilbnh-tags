@@ -2,7 +2,7 @@
 # Create bootstrap bucket for VM-Series, internal load balancer, and route to load balancer forwarding rule.
 
 module "bootstrap_region0" {
-  source        = "../../modules/google_bootstrap/"
+  source        = "./modules/google_bootstrap/"
   bucket_name   = "${local.prefix_region0}-bootstrap"
   file_location = var.fw_region0_bootstrap_path
   config        = ["init-cfg.txt", "bootstrap.xml"]
@@ -10,7 +10,7 @@ module "bootstrap_region0" {
 }
 
 module "vmseries_region0" {
-  source = "../../modules/vmseries_unmanaged_ig/"
+  source = "./modules/vmseries_unmanaged_ig/"
   image_name            = var.fw_image_name
   machine_type          = var.fw_machine_type
   create_instance_group = true
