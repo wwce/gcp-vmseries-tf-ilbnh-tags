@@ -3,7 +3,7 @@
 
 module "vpc_mgmt" {
   source               = "./modules/google_vpc/"
-  vpc                  = "${local.prefix}-mgmt-vpc"
+  vpc                  = "mgmt-vpc"
   delete_default_route = false
   allowed_sources      = var.mgmt_sources
   allowed_protocol     = "TCP"
@@ -23,7 +23,7 @@ module "vpc_mgmt" {
 
 module "vpc_untrust" {
   source               = "./modules/google_vpc/"
-  vpc                  = "${local.prefix}-untrust-vpc"
+  vpc                  = "untrust-vpc"
   delete_default_route = false
   allowed_sources      = ["0.0.0.0/0"]
 
@@ -41,7 +41,7 @@ module "vpc_untrust" {
 
 module "vpc_trust" {
   source               = "./modules/google_vpc/"
-  vpc                  = "${local.prefix}-trust-vpc"
+  vpc                  = "trust-vpc"
   delete_default_route = true
   allowed_sources      = ["0.0.0.0/0"]
 
